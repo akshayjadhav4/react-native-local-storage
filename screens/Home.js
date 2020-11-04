@@ -48,6 +48,18 @@ export default function Home({navigation, route}) {
     });
   };
 
+  const markComplete = async (id) => {
+    const newArr = seriesList.map((item) => {
+      if (item.id == id) {
+        item.isWatched = !item.isWatched;
+      }
+      return item;
+    });
+
+    await AsyncStorage.setItem('@series_list', JSON.stringify(newArr));
+    setSeriesList(newArr);
+  };
+
   useEffect(() => {
     getList();
   }, [isFocused]);
@@ -61,7 +73,7 @@ export default function Home({navigation, route}) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {seriesList.length == 0 ? (
+      {seriesList?.length == 0 ? (
         <Container style={styles.emptyContainer}>
           <H1 style={styles.heading}>Your watch list is empty</H1>
         </Container>
@@ -69,7 +81,7 @@ export default function Home({navigation, route}) {
         <Container style={styles.container}>
           <H1 style={styles.heading}>Next series to watch</H1>
           <List>
-            {seriesList.map((item) => (
+            {seriesList?.map((item) => (
               <ListItem style={styles.listItem} noBorder key={item.id}>
                 <Left>
                   <Button
@@ -87,7 +99,10 @@ export default function Home({navigation, route}) {
                   <Text note>{item.totalNumberOfSeason} seasons to watch</Text>
                 </Body>
                 <Right>
-                  <CheckBox />
+                  <CheckBox
+                    checked={item.isWatched}
+                    onPress={() => markComplete(item.id)}
+                  />
                 </Right>
               </ListItem>
             ))}
