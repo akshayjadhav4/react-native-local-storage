@@ -17,10 +17,12 @@ import {
   Spinner,
 } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import {useIsFocused} from '@react-navigation/native';
 export default function Home({navigation, route}) {
   const [seriesList, setSeriesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const isFocused = useIsFocused();
 
   const getList = async () => {
     setIsLoading(true);
@@ -35,7 +37,7 @@ export default function Home({navigation, route}) {
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [isFocused]);
   if (isLoading) {
     return (
       <Container style={styles.emptyContainer}>
