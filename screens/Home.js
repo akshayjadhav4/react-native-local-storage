@@ -18,6 +18,7 @@ import {
 } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsFocused} from '@react-navigation/native';
+import Snackbar from 'react-native-snackbar';
 export default function Home({navigation, route}) {
   const [seriesList, setSeriesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +34,18 @@ export default function Home({navigation, route}) {
     const list = JSON.parse(storedList);
     setSeriesList(list);
     setIsLoading(false);
+  };
+
+  const deleteSeries = async (id) => {
+    const newList = await seriesList.filter((list) => list.id !== id);
+    await AsyncStorage.setItem('@series_list', JSON.stringify(newList));
+    setSeriesList(newList);
+    Snackbar.show({
+      text: 'Series Deleted.',
+      duration: Snackbar.LENGTH_SHORT,
+      backgroundColor: '#00b7c2',
+      textColor: '#eee',
+    });
   };
 
   useEffect(() => {
@@ -59,7 +72,10 @@ export default function Home({navigation, route}) {
             {seriesList.map((item) => (
               <ListItem style={styles.listItem} noBorder key={item.id}>
                 <Left>
-                  <Button style={styles.actionButton} danger>
+                  <Button
+                    style={styles.actionButton}
+                    danger
+                    onPress={() => deleteSeries(item.id)}>
                     <Icon name="trash" active />
                   </Button>
                   <Button style={styles.actionButton} warning>
