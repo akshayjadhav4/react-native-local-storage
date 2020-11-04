@@ -90,7 +90,10 @@ export default function Home({navigation, route}) {
                     onPress={() => deleteSeries(item.id)}>
                     <Icon name="trash" active />
                   </Button>
-                  <Button style={styles.actionButton} warning>
+                  <Button
+                    style={styles.actionButton}
+                    warning
+                    onPress={() => navigation.navigate('Edit', {item})}>
                     <Icon name="edit" type="Feather" active />
                   </Button>
                 </Left>
