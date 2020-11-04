@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {
   Fab,
   Icon,
@@ -72,7 +72,7 @@ export default function Home({navigation, route}) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <>
       {seriesList?.length == 0 ? (
         <Container style={styles.emptyContainer}>
           <H1 style={styles.heading}>Your watch list is empty</H1>
@@ -80,36 +80,40 @@ export default function Home({navigation, route}) {
       ) : (
         <Container style={styles.container}>
           <H1 style={styles.heading}>Next series to watch</H1>
-          <List>
-            {seriesList?.map((item) => (
-              <ListItem style={styles.listItem} noBorder key={item.id}>
-                <Left>
-                  <Button
-                    style={styles.actionButton}
-                    danger
-                    onPress={() => deleteSeries(item.id)}>
-                    <Icon name="trash" active />
-                  </Button>
-                  <Button
-                    style={styles.actionButton}
-                    warning
-                    onPress={() => navigation.navigate('Edit', {item})}>
-                    <Icon name="edit" type="Feather" active />
-                  </Button>
-                </Left>
-                <Body>
-                  <Title style={styles.seasonName}>{item.name}</Title>
-                  <Text note>{item.totalNumberOfSeason} seasons to watch</Text>
-                </Body>
-                <Right>
-                  <CheckBox
-                    checked={item.isWatched}
-                    onPress={() => markComplete(item.id)}
-                  />
-                </Right>
-              </ListItem>
-            ))}
-          </List>
+          <ScrollView>
+            <List>
+              {seriesList?.map((item) => (
+                <ListItem style={styles.listItem} noBorder key={item.id}>
+                  <Left>
+                    <Button
+                      style={styles.actionButton}
+                      danger
+                      onPress={() => deleteSeries(item.id)}>
+                      <Icon name="trash" active />
+                    </Button>
+                    <Button
+                      style={styles.actionButton}
+                      warning
+                      onPress={() => navigation.navigate('Edit', {item})}>
+                      <Icon name="edit" type="Feather" active />
+                    </Button>
+                  </Left>
+                  <Body>
+                    <Title style={styles.seasonName}>{item.name}</Title>
+                    <Text note>
+                      {item.totalNumberOfSeason} seasons to watch
+                    </Text>
+                  </Body>
+                  <Right>
+                    <CheckBox
+                      checked={item.isWatched}
+                      onPress={() => markComplete(item.id)}
+                    />
+                  </Right>
+                </ListItem>
+              ))}
+            </List>
+          </ScrollView>
         </Container>
       )}
       <Fab
@@ -118,7 +122,7 @@ export default function Home({navigation, route}) {
         onPress={() => navigation.navigate('Add')}>
         <Icon name="add" />
       </Fab>
-    </ScrollView>
+    </>
   );
 }
 
