@@ -38,7 +38,7 @@ export default function App() {
             },
             title: 'Add Series',
             headerTitleStyle: {
-              textAlign: 'center',
+              textAlign: 'justify',
               color: '#00b7c2',
             },
           }}
@@ -52,7 +52,7 @@ export default function App() {
             },
             title: 'Edit Series',
             headerTitleStyle: {
-              textAlign: 'center',
+              textAlign: 'justify',
               color: '#00b7c2',
             },
           }}
