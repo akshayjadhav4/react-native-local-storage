@@ -22,7 +22,7 @@ export default function App() {
             headerStyle: {
               backgroundColor: '#0f4c75',
             },
-            title: 'Netflix WishList',
+            title: 'Netflix Wishlist',
             headerTitleStyle: {
               textAlign: 'center',
               color: '#00b7c2',
